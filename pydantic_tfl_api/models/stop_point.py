@@ -5,7 +5,8 @@ from typing import List, Optional
 from .line_group import LineGroup
 from .line_mode_group import LineModeGroup
 from .additional_properties import AdditionalProperties
-
+# note additional import from .line import Line
+# at the end of the file
 
 class StopPoint(BaseModel):
     naptan_id: str = Field(alias="naptanId")
