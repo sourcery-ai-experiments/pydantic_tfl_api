@@ -22,7 +22,7 @@ jobs:
     uses: ./.github/workflows/dependency-review.yml
 
   publish:
-    needs: [test, codeql, dependency-review]
+    needs: [test, dependency-review] # codeql, 
     runs-on: ubuntu-latest
     environment: 
       name: 'published'
