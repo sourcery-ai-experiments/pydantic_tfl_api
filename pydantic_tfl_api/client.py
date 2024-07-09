@@ -38,7 +38,7 @@ class Client:
     :param ApiToken api_token: API token to access TfL unified API
     """
 
-    def __init__(self, api_token: ApiToken):
+    def __init__(self, api_token: ApiToken = None):
         self.client = RestClient(api_token)
         self.models = self._load_models()
 
@@ -57,7 +57,11 @@ class Client:
         Model = self.models.get(model_name)
         if Model is None:
             raise ValueError(f"No model found with name {model_name}")
-        return Model(**response.json())
+        data = response.json()
+        if isinstance(data, list):
+            return [Model(**item) for item in data]
+        else:
+            return Model(**data)
 
     def _deserialize_error(self, response: Response) -> models.ApiError:
         # if content is json, deserialize it, otherwise manually create an ApiError object
@@ -111,6 +115,14 @@ class Client:
     def get_line_status_severity(self, severity: str) -> models.Line | models.ApiError:
         response = self.client.send_request(
             endpoints["lineStatusBySeverity"].format(severity)
+        )
+        if response.status_code is not 200:
+            return self._deserialize_error(response)
+        return self._deserialize("Line", response)
+    
+    def get_line_status_by_mode(self, mode: str) -> models.Line | models.ApiError:
+        response = self.client.send_request(
+            endpoints["lineStatusByMode"].format(mode)
         )
         if response.status_code is not 200:
             return self._deserialize_error(response)

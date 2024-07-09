@@ -27,6 +27,7 @@ try:
 except ImportError:
     from urllib import urlencode
 from .config import base_url
+from .api_token import ApiToken
 
 class RestClient():
     """RestClient.
@@ -34,8 +35,8 @@ class RestClient():
     :param ApiToken api_token: API token to access TfL unified API
     """
 
-    def __init__(self, api_token):
-        self.api_token = { "app_id": api_token.app_id, "app_key": api_token.app_key }
+    def __init__(self, api_token: ApiToken = None):
+        self.api_token = {"app_id": api_token.app_id, "app_key": api_token.app_key} if api_token else None
 
     def send_request(self, location, params=None):
         return requests.get(base_url + location + "?" + self._get_query_strings(params))
