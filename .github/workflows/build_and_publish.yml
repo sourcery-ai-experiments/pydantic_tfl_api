@@ -2,8 +2,6 @@ name: Python package
 
 on:
   pull_request:
-    branches:
-      - main
 
 permissions:                    # Global permissions configuration starts here
   contents: read                # 'read' access to repository contents
