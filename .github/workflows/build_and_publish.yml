@@ -1,7 +1,9 @@
-name: Python package
+name: Publish the completed package to Pypi
 
 on:
-  merge:
+  push:
+    branches:
+      - main
 
 # permissions:                    # Global permissions configuration starts here
 #   contents: read                # 'read' access to repository contents
