@@ -19,3 +19,5 @@ class Disruption(BaseModel):
     closure_text: str = Field(alias='closureText')
 
     model_config = {'populate_by_name': True}
+
+    

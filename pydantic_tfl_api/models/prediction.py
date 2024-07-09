@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
+from typing import Optional
 
 from .prediction_timing import PredictionTiming
 
@@ -11,7 +12,7 @@ class Prediction(BaseModel):
     station_name: str = Field(alias='stationName')
     line_id: str = Field(alias='lineId')
     line_name: str = Field(alias='lineName')
-    platform_name: str = Field(alias='platformName')
+    platform_name: Optional[str] = Field(None, alias='platformName')
     direction: str = Field(alias='direction')
     bearing: str = Field(alias='bearing')
     destination_naptan_id: str = Field(alias='destinationNaptanId')

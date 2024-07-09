@@ -6,36 +6,41 @@ from .line_group import LineGroup
 from .line_mode_group import LineModeGroup
 from .additional_properties import AdditionalProperties
 
-class StopPoint(BaseModel):
-    naptan_id: str = Field(alias='naptanId')
-    platform_name: str = Field(alias='platformName')
-    indicator: str = Field(alias='indicator')
-    stop_letter: str = Field(alias='stopLetter')
-    modes: List[str] = Field(alias='modes')
-    ics_code: str = Field(alias='icsCode')
-    sms_code: str = Field(alias='smsCode')
-    stop_type: str = Field(alias='stopType')
-    station_naptan: str = Field(alias='stationNaptan')
-    accessibility_summary: str = Field(alias='accessibilitySummary')
-    hub_naptan_code: str = Field(alias='hubNaptanCode')
-    lines: List['Line'] = Field(alias='lines')
-    line_group: List[LineGroup] = Field(alias='lineGroup')
-    line_mode_groups: List[LineModeGroup] = Field(alias='lineModeGroups')
-    full_name: str = Field(alias='fullName')
-    naptan_mode: str = Field(alias='naptanMode')
-    status: bool = Field(alias='status')
-    id: str = Field(alias='id')
-    url: str = Field(alias='url')
-    common_name: str = Field(alias='commonName')
-    distance: int = Field(alias='distance')
-    place_type: str = Field(alias='placeType')
-    additional_properties: List[AdditionalProperties] = Field(alias='additionalProperties')
-    children: Optional[List['StopPoint']] = Field(None, alias='children')
-    children_urls: List[str] = Field(alias='childrenUrls')
-    lat: int = Field(alias='lat')
-    lon: int = Field(alias='lon')
 
-    model_config = {'populate_by_name': True}
+class StopPoint(BaseModel):
+    naptan_id: str = Field(alias="naptanId")
+    platform_name: Optional[str] = Field(None, alias="platformName")
+    indicator: Optional[str] = Field(None, alias="indicator")
+    stop_letter: Optional[str] = Field(None, alias="stopLetter")
+    modes: List[str] = Field(alias="modes")
+    ics_code: Optional[str] = Field(None, alias="icsCode")
+    sms_code: Optional[str] = Field(None, alias="smsCode")
+    stop_type: str = Field(alias="stopType")
+    station_naptan: str = Field(alias="stationNaptan")
+    accessibility_summary: Optional[str] = Field(None, alias="accessibilitySummary")
+    hub_naptan_code: Optional[str] = Field(None, alias="hubNaptanCode")
+    lines: List["Line"] = Field(alias="lines")
+    line_group: List[LineGroup] = Field(alias="lineGroup")
+    line_mode_groups: List[LineModeGroup] = Field(alias="lineModeGroups")
+    full_name: Optional[str] = Field(None, alias="fullName")
+    naptan_mode: Optional[str] = Field(None, alias="naptanMode")
+    status: bool = Field(alias="status")
+    id: str = Field(alias="id")
+    url: Optional[str] = Field(None, alias="url")
+    common_name: str = Field(alias="commonName")
+    distance: Optional[int] = Field(None, alias="distance")
+    place_type: str = Field(alias="placeType")
+    additional_properties: List[AdditionalProperties] = Field(
+        alias="additionalProperties"
+    )
+    children: Optional[List["StopPoint"]] = Field(None, alias="children")
+    children_urls: Optional[List[str]] = Field([], alias="childrenUrls")
+    lat: int = Field(alias="lat")
+    lon: int = Field(alias="lon")
+
+    model_config = {"populate_by_name": True}
+
 
 from .line import Line
+
 StopPoint.model_rebuild()
