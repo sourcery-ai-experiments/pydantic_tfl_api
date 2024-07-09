@@ -52,16 +52,20 @@ jobs:
           python  -c "import os; print(os.environ['VIRTUAL_ENV'])"
       - name: Bump version
         run: poetry version minor
-      - name: Commit changes
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add pyproject.toml
-          git commit -m "Bump version"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+      # - name: Commit changes
+      #   run: |
+      #     git config --local user.email "github-actions[bot]@users.noreply.github.com"
+      #     git config --local user.name "github-actions[bot]"
+      #     git add pyproject.toml
+      #     git commit -m "Bump version"
+      # - name: Push changes
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     # github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit & Push changes
+        uses: actions-js/push@master
         with:
-          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.head_ref }}
       - name: Build
         run: poetry build
