@@ -1,12 +1,15 @@
 name: Python package
 
 on:
+  workflow_call:
   push:
-    branches-ignore:
-      - main
-  pull_request:
-    branches:
-      - main
+      branches-ignore:
+          - main
+
+
+permissions:                    # Global permissions configuration starts here
+  contents: read                # 'read' access to repository contents
+  pull-requests: read          # 'write' access to pull requests
 
 jobs:
   test:
@@ -50,4 +53,4 @@ jobs:
       # - name: Upload coverage reports to Codecov
       #   uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4
       #   env:
-      #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}          
+      #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
