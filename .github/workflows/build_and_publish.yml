@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+permissions:                    # Global permissions configuration starts here
+  contents: read                # 'read' access to repository contents
+  pull-requests: read          # 'write' access to pull requests
+
 jobs:
   codeql:
     name: "CodeQL"
@@ -102,4 +106,55 @@ jobs:
       # - name: Upload coverage reports to Codecov
       #   uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4
       #   env:
-      #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}          
+      #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      
+  publish:
+    needs: [test, codeql]
+    runs-on: ubuntu-latest
+    environment: 
+      name: 'published'
+    permissions:                # Job-level permissions configuration starts here
+      contents: write           # 'write' access to repository contents
+      pull-requests: write      # 'write' access to pull requests    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
+      - name: Install OS dependencies for snok/install-poetry
+        run: |
+          DEBIAN_FRONTEND=noninteractive apt update
+          DEBIAN_FRONTEND=noninteractive apt install curl sqlite3 -y
+      - uses: snok/install-poetry@93ada01c735cc8a383ce0ce2ae205a21c415379b # v1
+        with:
+          version: 1.8.3 # pin the version as they keep changing their APIs
+          virtualenvs-create: false
+          virtualenvs-in-project: false
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          . venv/bin/activate
+          poetry install --with dev --no-interaction --sync
+          python  -c "import os; print(os.environ['VIRTUAL_ENV'])"
+      - name: Bump version
+        run: poetry version minor
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -am "Bump version"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build
+        run: poetry build
+      - name: Use Pypi test
+        run: |
+          poetry config repositories.test-pypi https://test.pypi.org/legacy/
+          poetry config pypi-token.test-pypi  ${{ secrets.PYPI_TOKEN }}
+      - name: Publish
+        run: poetry publish -r test-pypi
+
+    
