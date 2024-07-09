@@ -3,9 +3,9 @@ name: Python package
 on:
   pull_request:
 
-permissions:                    # Global permissions configuration starts here
-  contents: read                # 'read' access to repository contents
-  pull-requests: read          # 'write' access to pull requests
+# permissions:                    # Global permissions configuration starts here
+#   contents: read                # 'read' access to repository contents
+#   pull-requests: read          # 'write' access to pull requests
 
 jobs:
   codeql:
