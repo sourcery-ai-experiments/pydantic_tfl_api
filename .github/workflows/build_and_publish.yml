@@ -1,19 +1,19 @@
 name: Python package
 
 on:
-  pull_request:
+  merge:
 
 # permissions:                    # Global permissions configuration starts here
 #   contents: read                # 'read' access to repository contents
 #   pull-requests: read          # 'write' access to pull requests
 
 jobs:
-  # codeql:
-  #   permissions:
-  #     actions: read
-  #     contents: read
-  #     security-events: write
-  #   uses: ./.github/workflows/codeql.yml
+  codeql:
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    uses: ./.github/workflows/codeql.yml
 
   test:
     uses: ./.github/workflows/test-workflow.yml
@@ -22,7 +22,7 @@ jobs:
     uses: ./.github/workflows/dependency-review.yml
 
   publish:
-    needs: [test, dependency-review] # codeql, 
+    needs: [test, dependency-review, codeql]
     runs-on: ubuntu-latest
     environment: 
       name: 'published'
@@ -37,10 +37,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.12
-      # - name: Install OS dependencies for snok/install-poetry
-      #   run: |
-      #     DEBIAN_FRONTEND=noninteractive apt update
-      #     DEBIAN_FRONTEND=noninteractive apt install curl sqlite3 -y
       - uses: snok/install-poetry@93ada01c735cc8a383ce0ce2ae205a21c415379b # v1
         with:
           version: 1.8.3 # pin the version as they keep changing their APIs

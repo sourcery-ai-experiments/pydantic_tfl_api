@@ -17,17 +17,12 @@ jobs:
       matrix:
         python-version: ["3.12"]
     runs-on: ubuntu-latest
-    container: ubuntu:latest@sha256:2e863c44b718727c860746568e1d54afd13b2fa71b160f5cd9058fc436217b30
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install OS dependencies for snok/install-poetry
-        run: |
-          DEBIAN_FRONTEND=noninteractive apt update
-          DEBIAN_FRONTEND=noninteractive apt install curl sqlite3 -y
       - uses: snok/install-poetry@93ada01c735cc8a383ce0ce2ae205a21c415379b # v1
         with:
           version: 1.8.3 # pin the version as they keep changing their APIs
