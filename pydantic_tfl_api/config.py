@@ -32,6 +32,7 @@ endpoints = {
     'lineStatusBySeverity': 'Line/Status/{0}',
     'lineStatusByMode': 'Line/Mode/{0}/Status',
     'routeByLineId': 'Line/{0}/Route',
+    'routeByLineIdWithDirection': 'Line/{0}/Route/Sequence/{1}',
     'routeByMode': 'Line/Mode/{0}/Route',
     'lineDisruptionsByLineId': 'Line/{0}/Disruption',
     'lineDisruptionsByMode': 'Line/Mode/{0}/Disruption',

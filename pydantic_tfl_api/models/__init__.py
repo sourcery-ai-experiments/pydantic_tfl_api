@@ -1,7 +1,9 @@
-# from https://github.com/dhilmathy/TfL-python-api
+# portions of this code are from https://github.com/dhilmathy/TfL-python-api
+# this code from 
 # MIT License
 
 # Copyright (c) 2018 Mathivanan Palanisamy
+# Copyright (c) 2024 Rob Aleck
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,14 +38,14 @@ from .route_section_naptan_entry_sequence import (
 from .affected_route import (
     AffectedRoute,
 )  # dependent on RouteSectionNaptanEntrySequence
-
 from .disruption import Disruption  # dependent on AffectedRoute and StopPoint
+
 from .service_type import ServiceType  # no dependencies
 from .route_section import RouteSection  # no dependencies
+
 from .passenger_flow import PassengerFlow  # no dependencies
 from .train_loading import TrainLoading  # no dependencies
 from .crowding import Crowding  # dependent on PassengerFlow and TrainLoading
-
 
 from .validity_period import ValidityPeriod  # no dependencies
 from .line_status import LineStatus  # dependent on ValidityPeriod
@@ -52,12 +54,15 @@ from .line import (
     Line,
 )  # dependent on Disruption, LineStatus, RouteSection, ServiceType, Crowding
 
+from .prediction_timing import PredictionTiming  # no dependencies
+from .prediction import Prediction  # dependent on PredictionTiming
 
-from .prediction_timing import PredictionTiming
-from .prediction import Prediction
+from .api_error import ApiError  # no dependencies
+from .mode import Mode  # no dependencies
 
-from .api_error import ApiError
-from .mode import Mode
+from .matched_stop import MatchedStop  # no dependencies
+from .ordered_route import OrderedRoute  # no dependencies
+from .route_sequence import RouteSequence  # dependent on MatchedStop and OrderedRoute
 
 __all__ = [
     "AdditionalProperties",
@@ -70,11 +75,14 @@ __all__ = [
     "LineModeGroup",
     "LineStatus",
     "Mode",
+    "MatchedStop",
+    "OrderedRoute",
     "PassengerFlow",
     "Prediction",
     "PredictionTiming",
     "RouteSection",
     "RouteSectionNaptanEntrySequence",
+    "RouteSequence",
     "ServiceType",
     "StopPoint",
     "StopPointsResponse",

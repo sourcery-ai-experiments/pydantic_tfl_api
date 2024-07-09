@@ -1,7 +1,8 @@
-# from https://github.com/dhilmathy/TfL-python-api
+# portions of this code are from https://github.com/dhilmathy/TfL-python-api
 # MIT License
 
 # Copyright (c) 2018 Mathivanan Palanisamy
+# Copyright (c) 2024 Rob Aleck
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +26,7 @@ from .config import endpoints
 from .api_token import ApiToken
 from .rest_client import RestClient
 from importlib import import_module
-from typing import Any
+from typing import Any, Literal
 from requests import Response
 import pkgutil
 from pydantic import BaseModel
@@ -139,6 +140,14 @@ class Client:
         if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
+    
+    def get_route_by_line_id_with_direction(self, line_id: str, direction: Literal['inbound', 'outbound', 'all']) -> models.Line | models.ApiError:
+        response = self.client.send_request(
+            endpoints["routeByLineIdWithDirection"].format(line_id, direction)
+        )
+        if response.status_code != 200:
+            return self._deserialize_error(response)
+        return self._deserialize("RouteSequence", response)
 
     def get_line_disruptions_by_line_id(self, line_id: str) -> models.Disruption | models.ApiError:
         response = self.client.send_request(
