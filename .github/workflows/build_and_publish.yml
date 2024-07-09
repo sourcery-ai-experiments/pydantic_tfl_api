@@ -55,25 +55,11 @@ jobs:
       - name: Bump version
         run: |
           poetry version minor
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git add pyproject.toml
           git commit -m "bump version from workflow"
           git push
-      # - name: Commit changes
-      #   run: |
-      #     git config --local user.email "github-actions[bot]@users.noreply.github.com"
-      #     git config --local user.name "github-actions[bot]"
-      #     git add pyproject.toml
-      #     git commit -m "Bump version"
-      # - name: Push changes
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     # github_token: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Commit & Push changes
-      #   uses: actions-js/push@master
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     branch: ${{ github.head_ref }}
-      #     rebase: true
       - name: Build
         run: poetry build
       - name: Use Pypi test
