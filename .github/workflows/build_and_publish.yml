@@ -31,6 +31,8 @@ jobs:
       pull-requests: write      # 'write' access to pull requests    
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -52,10 +54,10 @@ jobs:
           python  -c "import os; print(os.environ['VIRTUAL_ENV'])"
       - name: Bump version
         run: |
-        poetry version minor
-        git add pyproject.toml
-        git commit -m "bump version from workflow"
-        git push
+          poetry version minor
+          git add pyproject.toml
+          git commit -m "bump version from workflow"
+          git push
       # - name: Commit changes
       #   run: |
       #     git config --local user.email "github-actions[bot]@users.noreply.github.com"
