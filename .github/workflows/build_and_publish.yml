@@ -111,7 +111,6 @@ jobs:
   publish:
     needs: [test, codeql]
     runs-on: ubuntu-latest
-    container: ubuntu:latest@sha256:2e863c44b718727c860746568e1d54afd13b2fa71b160f5cd9058fc436217b30
     environment: 
       name: 'published'
     permissions:                # Job-level permissions configuration starts here
@@ -125,8 +124,8 @@ jobs:
           python-version: 3.12
       - name: Install OS dependencies for snok/install-poetry
         run: |
-          DEBIAN_FRONTEND=noninteractive sudo apt update
-          DEBIAN_FRONTEND=noninteractive sudo apt install curl sqlite3 -y
+          DEBIAN_FRONTEND=noninteractive apt update
+          DEBIAN_FRONTEND=noninteractive apt install curl sqlite3 -y
       - uses: snok/install-poetry@93ada01c735cc8a383ce0ce2ae205a21c415379b # v1
         with:
           version: 1.8.3 # pin the version as they keep changing their APIs
