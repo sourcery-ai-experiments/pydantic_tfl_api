@@ -51,7 +51,11 @@ jobs:
           poetry install --with dev --no-interaction --sync
           python  -c "import os; print(os.environ['VIRTUAL_ENV'])"
       - name: Bump version
-        run: poetry version minor
+        run: |
+        poetry version minor
+        git add pyproject.toml
+        git commit -m "bump version from workflow"
+        git push
       # - name: Commit changes
       #   run: |
       #     git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -62,12 +66,12 @@ jobs:
       #   uses: ad-m/github-push-action@master
       #   with:
       #     # github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Commit & Push changes
-        uses: actions-js/push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.head_ref }}
-          rebase: true
+      # - name: Commit & Push changes
+      #   uses: actions-js/push@master
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     branch: ${{ github.head_ref }}
+      #     rebase: true
       - name: Build
         run: poetry build
       - name: Use Pypi test
