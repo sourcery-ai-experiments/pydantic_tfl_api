@@ -6,5 +6,4 @@ class Mode(BaseModel):
     is_scheduled_service: bool = Field(alias='isScheduledService')
     mode_name: str = Field(alias='modeName')
 
-    class Config:
-        allow_population_by_field_name = True
+    model_config = {'populate_by_name': True}

@@ -13,5 +13,4 @@ class ApiError(BaseModel):
     def parse_timestamp(cls, v):
         return datetime.strptime(v, '%a, %d %b %Y %H:%M:%S %Z')
 
-    class Config:
-        allow_population_by_field_name = True
+    model_config = {'populate_by_name': True}

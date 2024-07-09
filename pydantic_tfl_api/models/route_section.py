@@ -13,5 +13,4 @@ class RouteSection(BaseModel):
     valid_to: datetime = Field(alias='validTo')
     valid_from: datetime = Field(alias='validFrom')
 
-    class Config:
-        allow_population_by_field_name = True
+    model_config = {'populate_by_name': True}

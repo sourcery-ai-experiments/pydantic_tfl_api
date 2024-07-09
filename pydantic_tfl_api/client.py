@@ -80,13 +80,13 @@ class Client:
         response = self.client.send_request(
             endpoints["stopPointsByLineId"].format(line_id)
         )
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("StopPoint", response)
 
     def get_line_meta_modes(self) -> models.Mode | models.ApiError:
         response = self.client.send_request(endpoints["lineMetaModes"])
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Mode", response)
 
@@ -100,7 +100,7 @@ class Client:
         else:
             endpoint = endpoints["linesByMode"].format(mode)
         response = self.client.send_request(endpoint)
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
 
@@ -108,7 +108,7 @@ class Client:
         response = self.client.send_request(
             endpoints["lineStatus"].format(line), {"detail": include_details is True}
         )
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
 
@@ -116,7 +116,7 @@ class Client:
         response = self.client.send_request(
             endpoints["lineStatusBySeverity"].format(severity)
         )
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
     
@@ -124,19 +124,19 @@ class Client:
         response = self.client.send_request(
             endpoints["lineStatusByMode"].format(mode)
         )
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
 
     def get_route_by_line_id(self, line_id: str) -> models.Line | models.ApiError:
         response = self.client.send_request(endpoints["routeByLineId"].format(line_id))
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
 
     def get_route_by_mode(self, mode: str) -> models.Line | models.ApiError:
         response = self.client.send_request(endpoints["routeByMode"].format(mode))
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
 
@@ -144,7 +144,7 @@ class Client:
         response = self.client.send_request(
             endpoints["lineDisruptionsByLineId"].format(line_id)
         )
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Disruption", response)
 
@@ -152,25 +152,25 @@ class Client:
         response = self.client.send_request(
             endpoints["lineDisruptionsByMode"].format(mode)
         )
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Disruption", response)
 
     def get_stop_points_by_id(self, id: str) -> models.StopPoint | models.ApiError:
         response = self.client.send_request(endpoints["stopPointById"].format(id))
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("StopPoint", response)
 
     def get_stop_points_by_mode(self, mode: str) -> models.StopPointsResponse | models.ApiError:
         response = self.client.send_request(endpoints["stopPointByMode"].format(mode))
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("StopPointsResponse", response)
 
     def get_stop_point_meta_modes(self) -> models.Mode | models.ApiError:
         response = self.client.send_request(endpoints["stopPointMetaModes"])
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Mode", response)
 
@@ -178,6 +178,6 @@ class Client:
         response = self.client.send_request(
             endpoints["arrivalsByLineId"].format(line_id)
         )
-        if response.status_code is not 200:
+        if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Prediction", response)

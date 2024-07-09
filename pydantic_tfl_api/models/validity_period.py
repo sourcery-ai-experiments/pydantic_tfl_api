@@ -6,5 +6,4 @@ class ValidityPeriod(BaseModel):
     to_date: datetime = Field(alias='toDate')
     is_now: bool = Field(alias='isNow')
 
-    class Config:
-        allow_population_by_field_name = True
+    model_config = {'populate_by_name': True}

@@ -16,5 +16,4 @@ class LineStatus(BaseModel):
     validity_periods: List[ValidityPeriod] = Field(None, alias='validityPeriods')
     disruptions: Optional[List[Disruption]] = Field([], alias='disruptions')
 
-    class Config:
-        allow_population_by_field_name = True
+    model_config = {'populate_by_name': True}

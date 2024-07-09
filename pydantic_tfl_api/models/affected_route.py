@@ -17,5 +17,4 @@ class AffectedRoute(BaseModel):
     valid_from: datetime = Field(alias='validFrom')
     route_section_naptan_entry_sequence: List[RouteSectionNaptanEntrySequence] = Field(alias='routeSectionNaptanEntrySequence')
 
-    class Config:
-        allow_population_by_field_name = True
+    model_config = {'populate_by_name': True}

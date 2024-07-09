@@ -9,5 +9,4 @@ class Crowding(BaseModel):
     passenger_flows: Optional[List[PassengerFlow]] = Field(None, alias='passengerFlow')
     train_loadings: Optional[List[TrainLoading]] = Field(None, alias='trainLoadings')
 
-    class Config:
-        allow_population_by_field_name = True
+    model_config = {'populate_by_name': True}
