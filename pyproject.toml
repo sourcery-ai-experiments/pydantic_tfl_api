@@ -1,15 +1,17 @@
 [tool.poetry]
 name = "pydantic-tfl-api"
-version = "0.1.0"
+version = "0.2.0"
 description = "A Pydantic-based wrapper for the TfL Unified API https://api.tfl.gov.uk/. Not associated with or endorsed by TfL."
 authors = ["Rob Aleck <mnbf9rca@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
+homepage = "https://github.com/mnbf9rca/pydantic_tfl_api"
+repository = "https://github.com/mnbf9rca/pydantic_tfl_api"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-pydantic = "^2.8.2"
-requests = "^2.32.3"
+pydantic = ">=2.8.2"
+requests = ">=2.32.3"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
