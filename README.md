@@ -12,11 +12,10 @@ pip install pydantic-tfl-api
 
 ## Usage
 
-Uses Pydantic so you can use the `model_dump_json()` method to see the data returned by the API. See [Pydantic documentation](https://docs.pydantic.dev/latest/) for more help
+Uses Pydantic so you can use the `model_dump_json()` method to fully expand all the objects in the result. See [Pydantic documentation](https://docs.pydantic.dev/latest/) for more help.
 
 ```python
-from tfl.client import Client
-from tfl.api_token import ApiToken
+from pydantic_tfl_api.client import Client, ApiToken
 
 app_id = 'APPLICATION ID'
 app_key = 'APPLICATION KEY'
@@ -24,9 +23,10 @@ app_key = 'APPLICATION KEY'
 token = ApiToken(app_id, app_key)
 
 client = Client(token)
-print (client.get_line_meta_modes().model_dump_json())
+print (client.get_line_meta_modes())
 print (client.get_lines(mode="bus")[0].model_dump_json())
 print (client.get_lines(line_id="victoria")[0].model_dump_json())
+print (client.get_route_by_line_id_with_direction(line_id="northern", direction="all").model_dump_json())
 ```
 ## Class structure
 

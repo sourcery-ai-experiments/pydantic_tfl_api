@@ -26,7 +26,7 @@ from .config import endpoints
 from .api_token import ApiToken
 from .rest_client import RestClient
 from importlib import import_module
-from typing import Any, Literal
+from typing import Any, Literal, List
 from requests import Response
 import pkgutil
 from pydantic import BaseModel
@@ -77,7 +77,9 @@ class Client:
             message=response.text,
         )
 
-    def get_stop_points_by_line_id(self, line_id: str) -> models.StopPoint | models.ApiError:
+    def get_stop_points_by_line_id(
+        self, line_id: str
+    ) -> models.StopPoint | List[models.StopPoint] | models.ApiError:
         response = self.client.send_request(
             endpoints["stopPointsByLineId"].format(line_id)
         )
@@ -91,7 +93,9 @@ class Client:
             return self._deserialize_error(response)
         return self._deserialize("Mode", response)
 
-    def get_lines(self, line_id: str | None =None, mode: str | None =None) -> models.Line | models.ApiError:
+    def get_lines(
+        self, line_id: str | None = None, mode: str | None = None
+    ) -> models.Line | List[models.Line] | models.ApiError:
         if line_id is None and mode is None:
             raise Exception(
                 "Either the --line_id argument or the --mode argument needs to be specified."
@@ -105,7 +109,9 @@ class Client:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
 
-    def get_line_status(self, line: str, include_details: bool=None) -> models.Line | models.ApiError:
+    def get_line_status(
+        self, line: str, include_details: bool = None
+    ) -> models.Line | List[models.Line] | models.ApiError:
         response = self.client.send_request(
             endpoints["lineStatus"].format(line), {"detail": include_details is True}
         )
@@ -113,35 +119,43 @@ class Client:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
 
-    def get_line_status_severity(self, severity: str) -> models.Line | models.ApiError:
+    def get_line_status_severity(
+        self, severity: str
+    ) -> models.Line | List[models.Line] | models.ApiError:
         response = self.client.send_request(
             endpoints["lineStatusBySeverity"].format(severity)
         )
         if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
-    
-    def get_line_status_by_mode(self, mode: str) -> models.Line | models.ApiError:
-        response = self.client.send_request(
-            endpoints["lineStatusByMode"].format(mode)
-        )
+
+    def get_line_status_by_mode(
+        self, mode: str
+    ) -> models.Line | List[models.Line] | models.ApiError:
+        response = self.client.send_request(endpoints["lineStatusByMode"].format(mode))
         if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
 
-    def get_route_by_line_id(self, line_id: str) -> models.Line | models.ApiError:
+    def get_route_by_line_id(
+        self, line_id: str
+    ) -> models.Line | List[models.Line] | models.ApiError:
         response = self.client.send_request(endpoints["routeByLineId"].format(line_id))
         if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
 
-    def get_route_by_mode(self, mode: str) -> models.Line | models.ApiError:
+    def get_route_by_mode(
+        self, mode: str
+    ) -> models.Line | List[models.Line] | models.ApiError:
         response = self.client.send_request(endpoints["routeByMode"].format(mode))
         if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Line", response)
-    
-    def get_route_by_line_id_with_direction(self, line_id: str, direction: Literal['inbound', 'outbound', 'all']) -> models.Line | models.ApiError:
+
+    def get_route_by_line_id_with_direction(
+        self, line_id: str, direction: Literal["inbound", "outbound", "all"]
+    ) -> models.RouteSequence | List[models.RouteSequence] | models.ApiError:
         response = self.client.send_request(
             endpoints["routeByLineIdWithDirection"].format(line_id, direction)
         )
@@ -149,7 +163,9 @@ class Client:
             return self._deserialize_error(response)
         return self._deserialize("RouteSequence", response)
 
-    def get_line_disruptions_by_line_id(self, line_id: str) -> models.Disruption | models.ApiError:
+    def get_line_disruptions_by_line_id(
+        self, line_id: str
+    ) -> models.Disruption | List[models.Disruption] | models.ApiError:
         response = self.client.send_request(
             endpoints["lineDisruptionsByLineId"].format(line_id)
         )
@@ -157,7 +173,9 @@ class Client:
             return self._deserialize_error(response)
         return self._deserialize("Disruption", response)
 
-    def get_line_disruptions_by_mode(self, mode: str) -> models.Disruption | models.ApiError:
+    def get_line_disruptions_by_mode(
+        self, mode: str
+    ) -> models.Disruption | List[models.Disruption] | models.ApiError:
         response = self.client.send_request(
             endpoints["lineDisruptionsByMode"].format(mode)
         )
@@ -165,25 +183,33 @@ class Client:
             return self._deserialize_error(response)
         return self._deserialize("Disruption", response)
 
-    def get_stop_points_by_id(self, id: str) -> models.StopPoint | models.ApiError:
+    def get_stop_points_by_id(
+        self, id: str
+    ) -> models.StopPoint | List[models.StopPoint] | models.ApiError:
         response = self.client.send_request(endpoints["stopPointById"].format(id))
         if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("StopPoint", response)
 
-    def get_stop_points_by_mode(self, mode: str) -> models.StopPointsResponse | models.ApiError:
+    def get_stop_points_by_mode(
+        self, mode: str
+    ) -> models.StopPointsResponse | List[models.StopPointsResponse] | models.ApiError:
         response = self.client.send_request(endpoints["stopPointByMode"].format(mode))
         if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("StopPointsResponse", response)
 
-    def get_stop_point_meta_modes(self) -> models.Mode | models.ApiError:
+    def get_stop_point_meta_modes(
+        self,
+    ) -> models.Mode | List[models.Mode] | models.ApiError:
         response = self.client.send_request(endpoints["stopPointMetaModes"])
         if response.status_code != 200:
             return self._deserialize_error(response)
         return self._deserialize("Mode", response)
 
-    def get_arrivals_by_line_id(self, line_id: str) -> models.Prediction | models.ApiError:
+    def get_arrivals_by_line_id(
+        self, line_id: str
+    ) -> models.Prediction | List[models.Prediction] | models.ApiError:
         response = self.client.send_request(
             endpoints["arrivalsByLineId"].format(line_id)
         )
