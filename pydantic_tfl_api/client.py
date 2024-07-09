@@ -51,7 +51,7 @@ class Client:
                 attr = getattr(module, model_name)
                 if isinstance(attr, type) and issubclass(attr, BaseModel):
                     models_dict[model_name] = attr
-        print(models_dict)
+        # print(models_dict)
         return models_dict
 
     def _deserialize(self, model_name: str, response: Response) -> Any:
