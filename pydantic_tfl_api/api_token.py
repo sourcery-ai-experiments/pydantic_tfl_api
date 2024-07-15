@@ -29,6 +29,5 @@ class ApiToken():
     :param str app_key: Application Key from the API credentails
     """
 
-    def __init__(self, app_id, app_key):
-        self.app_id = app_id
+    def __init__(self, app_key):
         self.app_key = app_key
