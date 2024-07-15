@@ -5,20 +5,19 @@ from pydantic_tfl_api.models import ApiError, LineStatus, Line
 # to make sure that the pydantic models load
 # and that the TFL API connectivity is ok - although we'll have 
 def test_create_api_token():
-    api_token = ApiToken('your_api_token', 'app_key')
-    assert api_token.app_id == 'your_api_token'
-    assert api_token.app_key == 'app_key'
+    api_token = ApiToken('your_app_key')
+    assert api_token.app_key == 'your_app_key'
 
 def test_create_client_with_api_token():
     # checks that the API key is being passed to the RestClient
-    api_token = ApiToken('your_api_token', 'app_key')
+    api_token = ApiToken('your_app_key')
     client = Client(api_token)
-    assert client.client.api_token['app_id'] == 'your_api_token'
+    assert client.client.api_token['app_key'] == 'your_app_key'
 
 def test_get_line_status_by_mode_rejected_with_invalid_api_key():
-    api_token = ApiToken('your_api_token', 'app_key')
+    api_token = ApiToken('your_app_key')
     client = Client(api_token)
-    assert client.client.api_token['app_id'] == 'your_api_token'    
+    assert client.client.api_token['app_key'] == 'your_app_key'
     # should get a 429 error inside an ApiError object
     result = client.get_line_status_by_mode('overground,tube')
     assert isinstance(result, ApiError)

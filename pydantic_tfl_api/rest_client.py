@@ -36,7 +36,7 @@ class RestClient():
     """
 
     def __init__(self, api_token: ApiToken = None):
-        self.api_token = {"app_id": api_token.app_id, "app_key": api_token.app_key} if api_token else None
+        self.api_token = {"app_key": api_token.app_key} if api_token else None
 
     def send_request(self, location, params=None):
         request_headers = self._get_request_headers()
