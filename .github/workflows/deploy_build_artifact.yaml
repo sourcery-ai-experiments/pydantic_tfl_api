@@ -88,7 +88,7 @@ jobs:
       - name: publish release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "dist/*,${{ steps.attest-artifacts.outputs.bundle-path }}/*"
+          artifacts: "dist/*,${{ steps.attest-artifacts.outputs.bundle-path }}"
           tag: ${{ steps.Build.outputs.version }}
           allowUpdates: true
           artifactErrorsFailBuild: true
