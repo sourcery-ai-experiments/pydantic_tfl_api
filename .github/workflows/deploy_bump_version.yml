@@ -7,14 +7,20 @@ on:
       bump_type:
         type: choice
         options: ['minor', 'major', 'patch']
-        description: 'Bump major version'
+        description: 'Bump version'
         required: true
         default: 'patch'
-  pull_request:
-    branches:
-      - main
-    types:
-      - closed  
+  workflow_call:
+    inputs:
+      bump_type:
+        type: string
+        description: 'Bump version - minor, major or patch'
+        required: true
+  # pull_request:
+  #   branches:
+  #     - main
+  #   types:
+  #     - closed  
 
 jobs:
   bump_package_version:
@@ -65,7 +71,7 @@ jobs:
         run: |
           python -m venv venv
           . venv/bin/activate
-          poetry install --with dev --no-interaction --sync
+          poetry install --without dev --no-interaction --sync
           python  -c "import os; print(os.environ['VIRTUAL_ENV'])"
 
       - name: Bump version and build
@@ -85,7 +91,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ steps.app-token.outputs.token }}
-          branch: main
+          branch: ${{ github.ref }}
           
           
     outputs:

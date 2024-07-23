@@ -115,3 +115,7 @@ classDiagram
 
 
 ```
+
+# Development environment
+
+The devcontainer is set up to use the `poetry` package manager. You can use the `poetry` commands to manage the environment. The `poetry.lock` file is checked in, so you can use `poetry install --with dev --no-interaction --sync --no-root` to install the dependencies (which the devcontainer does on the `postCreateCommand` command).
