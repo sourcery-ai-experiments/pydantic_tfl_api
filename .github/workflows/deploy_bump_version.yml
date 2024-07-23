@@ -7,15 +7,14 @@ on:
       bump_type:
         type: choice
         options: ['minor', 'major', 'patch']
-        description: 'Bump major version'
+        description: 'Bump version'
         required: true
         default: 'patch'
   workflow_call:
     inputs:
       bump_type:
-        type: choice
-        options: ['minor', 'major', 'patch']
-        description: 'Bump major version'
+        type: string
+        description: 'Bump version - minor, major or patch'
         required: true
   # pull_request:
   #   branches:
