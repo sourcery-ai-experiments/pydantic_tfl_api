@@ -1,4 +1,4 @@
-name: build artifact and publish to pypi test
+name: build artifact and publish to pypi
 on: 
   # whenever a PR is closed against main, or allow manual runs
   workflow_dispatch:
