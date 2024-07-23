@@ -19,7 +19,7 @@ jobs:
   build_artifacts:
     runs-on: ubuntu-latest
     permissions:                # Job-level permissions configuration starts here
-      contents: read           # 'write' access to repository contents
+      contents: write           # 'write' access to repository contents
       actions: read
       id-token: write
       attestations: write
