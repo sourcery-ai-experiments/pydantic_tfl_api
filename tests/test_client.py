@@ -294,7 +294,7 @@ def test_get_maxage_headers_from_cache_control_header(cache_control_header, expe
     # Mock Response
     response = Response()
     if cache_control_header is not None:
-        response.headers = {"cache-control": cache_control_header}
+        response.headers = {"Cache-Control": cache_control_header}
     else:
         response.headers = {}
 
@@ -415,7 +415,7 @@ def test_parse_timedelta(value, base_time, expected_result):
         (
             86400,
             43200,
-            {"date": "Tue, 15 Nov 1994 12:45:26 GMT"},
+            {"Date": "Tue, 15 Nov 1994 12:45:26 GMT"},
             (
                 parsedate_to_datetime("Tue, 15 Nov 1994 12:45:26 GMT") + timedelta(seconds=86400),
                 parsedate_to_datetime("Tue, 15 Nov 1994 12:45:26 GMT") + timedelta(seconds=43200)
@@ -424,7 +424,7 @@ def test_parse_timedelta(value, base_time, expected_result):
         (
             None,
             43200,
-            {"date": "Tue, 15 Nov 1994 12:45:26 GMT"},
+            {"Date": "Tue, 15 Nov 1994 12:45:26 GMT"},
             (
                 None,
                 parsedate_to_datetime("Tue, 15 Nov 1994 12:45:26 GMT") + timedelta(seconds=43200)
@@ -433,7 +433,7 @@ def test_parse_timedelta(value, base_time, expected_result):
         (
             86400,
             None,
-            {"date": "Tue, 15 Nov 1994 12:45:26 GMT"},
+            {"Date": "Tue, 15 Nov 1994 12:45:26 GMT"},
             (
                 parsedate_to_datetime("Tue, 15 Nov 1994 12:45:26 GMT") + timedelta(seconds=86400),
                 None
@@ -442,7 +442,7 @@ def test_parse_timedelta(value, base_time, expected_result):
         (
             None,
             None,
-            {"date": "Tue, 15 Nov 1994 12:45:26 GMT"},
+            {"Date": "Tue, 15 Nov 1994 12:45:26 GMT"},
             (None, None),
         ),
         (
@@ -595,7 +595,7 @@ datetime_object_with_time_and_tz_utc = datetime(2023, 12, 31, 1, 2, 3, tzinfo=ti
     [
         (
             "application/json",
-            {"timestampUtc": "date", "exceptionType": "type", "httpStatusCode": 404, "httpStatus": "Not Found", "relativeUri": "/uri", "message": "message"},
+            {"timestampUtc": "Date", "exceptionType": "type", "httpStatusCode": 404, "httpStatus": "Not Found", "relativeUri": "/uri", "message": "message"},
             "_deserialize return value",
         ),
         (
@@ -613,7 +613,7 @@ def test_deserialize_error(content_type, response_content, expected_result):
     # Mock Response
     response = Response()
     response._content = bytes(json.dumps(response_content), 'utf-8')
-    response.headers = {"content-type": content_type, "date": "Tue, 15 Nov 1994 12:45:26 GMT"}
+    response.headers = {"Content-Type": content_type, "Date": "Tue, 15 Nov 1994 12:45:26 GMT"}
     response.status_code = 404
     response.reason = "Not Found"
     response.url = "/uri"

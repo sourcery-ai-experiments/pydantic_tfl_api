@@ -64,7 +64,7 @@ class Client:
 
     @staticmethod
     def _get_maxage_headers_from_cache_control_header(response: Response) -> Tuple[Optional[int], Optional[int]]:
-        cache_control = response.headers.get("cache-control")
+        cache_control = response.headers.get("Cache-Control")
         # e.g. 'public, must-revalidate, max-age=43200, s-maxage=86400'
         if cache_control is None:
             return None, None
@@ -87,7 +87,7 @@ class Client:
     @staticmethod
     def _get_result_expiry(response: Response) -> Tuple[ datetime | None, datetime | None]:
         s_maxage, maxage = Client._get_maxage_headers_from_cache_control_header(response)
-        request_datetime = parsedate_to_datetime(response.headers.get("date")) if "date" in response.headers else None
+        request_datetime = parsedate_to_datetime(response.headers.get("Date")) if "Date" in response.headers else None
 
         s_maxage_expiry = Client._parse_timedelta(s_maxage, request_datetime)
         maxage_expiry = Client._parse_timedelta(maxage, request_datetime)
@@ -133,10 +133,10 @@ class Client:
 
     def _deserialize_error(self, response: Response) -> models.ApiError:
         # if content is json, deserialize it, otherwise manually create an ApiError object
-        if response.headers.get("content-type") == "application/json":
+        if response.headers.get("Content-Type") == "application/json":
             return self._deserialize("ApiError", response)
         return models.ApiError(
-            timestampUtc=parsedate_to_datetime(response.headers.get("date")),
+            timestampUtc=parsedate_to_datetime(response.headers.get("Date")),
             exceptionType="Unknown",
             httpStatusCode=response.status_code,
             httpStatus=response.reason,
