@@ -7,7 +7,13 @@ This API returns data from the TfL API in a more pythonic way, using pydantic mo
 ## Installation
 
 ```bash
-pip install pydantic-tfl-api
+pip install pydantic_tfl_api
+```
+
+or
+
+```bash
+poetry add pydantic_tfl_api
 ```
 
 ## Usage
@@ -43,9 +49,9 @@ The following objects represent responses from the TfL API, and are therefore re
 - `StopPointsResponse`
 - `Prediction`
 
-These objects contains a property `content_expires` which is a `. This is calculated from the headers of the response. You can use these to calculate the time to live of the object, and to determine if the object is still valid - for example if implementing caching.
+These objects contains two properties `content_expires` and `shared_expires`, which are the calculated expiry based on the HTTP response timestamp and the `maxage`/`s-maxage` header respectively. You can use these to calculate the time to live of the object, and to determine if the object is still valid - for example if implementing caching.
 
-Here's a Mermaid visualisation of the Pydantic models:
+Here's a Mermaid visualisation of the Pydantic models (or [view online](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNqNVE1r4zAQ_StG59AfkMNC2XaXhXQ3xKGHxRdhTZIBW9KOpJZQ-t9Xlhxbkl3aHBzpzXvzpWHeWKsEsC1rO27MA_Iz8b6Rlf8JJGgtKlntDhEJnOr-dPI4iINyFlJDAOqo-c215fJRWrrW8M-BbEdqpq7u7r59Lktj7AkEBuoRe5TndVtE53uIU0qr3PN3Uq-i9Og_IM9APzr1mhqOxFHuFJ8FN3kMtdRl9lyeOv4lQFo8IVBE53sQzkmmoj8kgD5-kLT90fDEbXsBUVulI5wxQ6QvUPKw2YhofCRSlMX0czawUmyHcsxrOAWnD2jI6fkRJ8NwqC23zhSGdH4KUw30gi0cr7oMs97IpauIL_xE-Jl3KNBe90CoRFlYmmxE09oy977Je4XSroLmAEYrabLQ98IH9o54tyelgSyC-bp6SG94j5-knC4NIzi_1VxMaN1a1QVlWeiMBMLKDkkGLlCSyb85-WRTxCefexlFEzBNUVL10li0JSd83PWlowKf3iHPkm1YD9RzFH4Hvw2ahtkL9NCwrT9KcJZ417BGvnsqd1bVV9myrSUHG-bzPF_Y9sQ7429OC25h3OET6peeVfQ0bvnhb8M0l3-VunHe_wMvtQ55)):
 
 ```mermaid
 classDiagram
