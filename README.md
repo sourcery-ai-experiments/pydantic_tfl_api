@@ -7,13 +7,13 @@ This API returns data from the TfL API in a more pythonic way, using pydantic mo
 ## Installation
 
 ```bash
-pip install pydantic_tfl_api
+pip install pydantic-tfl-api
 ```
 
 or
 
 ```bash
-poetry add pydantic_tfl_api
+poetry add pydantic-tfl-api
 ```
 
 ## Usage
