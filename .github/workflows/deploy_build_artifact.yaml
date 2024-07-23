@@ -26,10 +26,6 @@ jobs:
 
     steps:
 
-      - name: check out code
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
-        with:
-          fetch-depth: 1
 
       - name: Set up Python
         uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5
@@ -42,6 +38,11 @@ jobs:
           version: 1.8.3 # pin the version as they keep changing their APIs
           virtualenvs-create: false
           virtualenvs-in-project: false
+
+      - name: check out code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 1
 
       - name: Install dependencies
         run: |
@@ -81,7 +82,7 @@ jobs:
           compression-level: 0 # no compression
           if-no-files-found: error
           name: ${{ steps.Build.outputs.artifact_name }}
-          path: dist/
+          path: "dist/*,${{ steps.attest-artifacts.outputs.bundle-path }}/*"
 
       - name: publish release
         uses: ncipollo/release-action@v1
