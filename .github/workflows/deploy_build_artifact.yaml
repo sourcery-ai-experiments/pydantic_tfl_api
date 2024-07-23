@@ -83,6 +83,14 @@ jobs:
           name: ${{ steps.Build.outputs.artifact_name }}
           path: dist/
 
+      - name: publish release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: dist/*
+          tag: ${{ steps.Build.outputs.version }}
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+
     outputs:
       artifact-url: ${{ steps.upload-artifact.outputs.artifact-url }}
       artifact-id: ${{ steps.upload-artifact.outputs.artifact-id }}
