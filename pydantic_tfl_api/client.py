@@ -133,10 +133,10 @@ class Client:
 
     def _deserialize_error(self, response: Response) -> models.ApiError:
         # if content is json, deserialize it, otherwise manually create an ApiError object
-        if response.headers.get("content-type") == "application/json":
+        if response.headers.get("Content-Type") == "application/json":
             return self._deserialize("ApiError", response)
         return models.ApiError(
-            timestampUtc=parsedate_to_datetime(response.headers.get("date")),
+            timestampUtc=parsedate_to_datetime(response.headers.get("Date")),
             exceptionType="Unknown",
             httpStatusCode=response.status_code,
             httpStatus=response.reason,
