@@ -1,5 +1,6 @@
 name: build artifact
 on: 
+  workflow_dispatch:
   workflow_call:
     outputs:
       artifact-url:
@@ -82,12 +83,12 @@ jobs:
           compression-level: 0 # no compression
           if-no-files-found: error
           name: ${{ steps.Build.outputs.artifact_name }}
-          path: "dist/*,${{ steps.attest-artifacts.outputs.bundle-path }}/*"
+          path: dist/*
 
       - name: publish release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: dist/*
+          artifacts: "dist/*,${{ steps.attest-artifacts.outputs.bundle-path }}/*"
           tag: ${{ steps.Build.outputs.version }}
           allowUpdates: true
           artifactErrorsFailBuild: true
