@@ -11,9 +11,9 @@ keywords = ["pydantic", "tfl", "tfl-api", "transport-for-london", "unified-api"]
 
 
 [tool.poetry.dependencies]
-python = "^3.12"
-pydantic = ">=2.8.2"
-requests = ">=2.32.3"
+python = ">3.9,<4.0"
+pydantic = ">=2.8.2,<3.0"
+requests = ">=2.32.3,<3.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
